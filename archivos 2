@@ -1,0 +1,54 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <stdio.h>
+
+struct regamigos
+{ char nombre[30];
+  char sexo,estado;
+  int  edad;
+};
+
+using namespace std;
+
+void  crear(char nombrearchivo[])
+{
+	FILE*ptr;
+	ptr = fopen(nombrearchivo,"Wb");
+		fclose(ptr);
+
+}
+void adicionardatos()
+{    
+		FILE*ptr;
+		regamigos l;
+		 
+		cout<< "Por favor introduzca el nombre";
+		do{
+		gets(l.nombre);
+		}while(strlen(l.nombre)==0);
+		
+		do{
+		cout<< "Por favor introduzca el sexo F/M";
+		cin>> l.sexo;
+		}while( (l.sexo != 'M')&&(l.sexo != 'F'));
+		
+		do{
+		cout<< "Por favor introduzca la edad";
+		cin>> l.edad;
+		} while((l.edad>150)||(l.edad<0));
+	
+		l.estado = 'A';
+		
+		ptr = fopen("amigos.dat","ab");
+		
+		fwrite(&l,sizeof(l),1,ptr);
+		
+		fclose(ptr);
+}
+void main()
+{   crear("amigos.da");
+    adicionardatos();
+	getch();
+} 
+
