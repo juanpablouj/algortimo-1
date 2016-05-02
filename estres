@@ -1,0 +1,149 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <stdio.h>
+
+struct producto
+{ 
+	int idproducto;
+	char nombre[30];
+	int stock;
+	float precio;
+};
+
+struct cliente
+{
+	int idclient;
+	char nombre[30];
+	char nit[20];
+	char email[80];
+
+};
+struct vendedor
+{
+	int idvendedor;
+	char nombre[30];
+	char telefono[15];
+	char email[15];
+};
+struct automovil
+{
+	int idadulto;
+	char placa[12];
+	int idcliente;
+};
+struct bomba
+{
+	int idbomba;
+	char descripcion[30];
+	int idproducto;
+	int idvendedor;
+};
+struct compra
+{
+	int idcompra;
+	char fecha[30];
+	int cantidad;
+	int idproducto;
+};
+struct venta
+{
+	int idvendedor;
+	char fecha[10];
+	int cantidad;
+	float preciounitario;
+	int idbomba;
+	int idauto;
+};
+
+using namespace std;
+
+
+void archivoproducto(char producto[])
+{ 
+	FILE*ptr;
+	
+		ptr = fopen("producto.dat","wb");
+		fclose(ptr);
+}
+void archivocliente(char cliente[])
+{ 
+	FILE*ptr;
+	
+		ptr = fopen("cliente.dat","wb");
+		fclose(ptr);
+}
+void archivovendedor(char vendedor[])
+{
+	FILE*ptr;
+	
+		ptr = fopen("vendedor.dat","wb");
+		fclose(ptr);
+}
+void archivoautomovil(char automovil[])
+{
+	FILE*ptr;
+	
+		ptr = fopen("automovil.dat","wb");
+		fclose(ptr);
+}
+void archivobomba(char bomba[])
+{
+	FILE*ptr;
+	
+		ptr = fopen("bomba.dat","wb");
+		fclose(ptr);
+}
+void archivocompra(char compra[])
+{
+	FILE*ptr;
+	
+		ptr = fopen("compra.dat","wb");
+		fclose(ptr);
+}
+void archivoventa(char venta[])
+{
+		FILE*ptr;
+	 	
+		ptr = fopen("venta.dat","wb");
+		fclose(ptr);
+}
+
+void escribirproducto()
+{
+	FILE*ptr;
+	producto prod;
+
+		cout<<"producto  :"<<" ";
+		cin>> prod.idproducto;
+		cout<<"cliente  : "<<" ";
+		
+		do{
+		gets(prod.nombre);
+		}while(strlen(prod.nombre)==0);
+
+		cout<<"precio  :"<<" ";
+		do{
+		cin>> prod.precio;
+		}while(prod.precio<0);
+	  
+		ptr = fopen("producto.dat","ab");
+		fwrite(&prod, sizeof(prod),1,ptr);
+		fclose(ptr);
+
+
+}
+
+
+
+void main()
+{
+	archivoproducto("producto");
+	escribirproducto();
+	archivocliente("cliente");
+	archivovendedor("vendedor");
+	archivoautomovil("automovil");
+	archivobomba("bomba");
+	archivoventa("venta");
+	getch();
+}
