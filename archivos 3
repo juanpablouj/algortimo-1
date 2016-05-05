@@ -1,0 +1,169 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <stdio.h>
+
+struct regamigos
+{ char nombre[30];
+  char sexo,estado;
+  int  edad;
+};
+
+using namespace std;
+
+void  crear(char nombrearchivo[])
+{
+	FILE*ptr;
+	ptr = fopen("nombrearchivo.dat","ab"); 
+		fclose(ptr);
+
+}
+void adicionardatos()
+{    
+		FILE*ptr;
+		regamigos reg;
+		 
+		cout<< "Por favor introduzca el nombre";
+		do{
+		gets(reg.nombre);
+		}while(strlen(reg.nombre)==0);
+		
+		do{
+		cout<< "Por favor introduzca el sexo F/M";
+		cin>> reg.sexo;
+		}while( (reg.sexo != 'M')&&(reg.sexo != 'F'));
+		
+		do{
+		cout<< "Por favor introduzca la edad";
+		cin>> reg.edad;
+		} while((reg.edad>150)||(reg.edad<0));
+	
+		reg.estado = 'A';
+		
+		ptr = fopen("amigos.dat","ab");
+		
+		fwrite(&reg,sizeof(reg),1,ptr);// Escribe un archivo
+		
+		fclose(ptr);
+}
+
+void mostrararchivos()
+{	FILE*ptr;
+	regamigos reg;
+	int c=0;
+
+		ptr=fopen("amigos.dat","rb");
+		
+			if(ptr!=NULL)
+			{
+				cout<<"---------------------------------------------------------------"<<endl;
+				cout<<"========================REPORTE AMIGOS========================="<<endl;
+				cout<<"---------------------------------------------------------------"<<endl;
+				cout<<"nREG  NOMBRE EDAD  SEXO ESTADO";
+				cout<<"==============================================================="<<endl;
+				fread(&reg,sizeof(reg),1,ptr);
+			
+				while(feof(ptr)==false)
+				{
+				if(reg.estado=='A')
+				{
+						cout<<c+1<<reg.nombre<<"  "<<reg.edad<< " "<<reg.estado<<endl;
+				}
+				if(reg.sexo=='M')
+				{ 
+						cout<<"MASCULINO";
+				}
+				else 
+				{
+						cout<<"FEMENINO";
+				}
+				fread(&reg,sizeof(reg),1,ptr);
+				
+			}
+				fclose(ptr); 
+			}
+			else
+			{ 
+					cout<<"ARCHIVO NO EXISTE"<<endl;
+			}
+}
+void edadmayor()
+{
+	FILE*ptr;
+	regamigos reg;
+	int edadmay=0;
+	char nombreamigomayor[100];
+
+	ptr=fopen("amigos.dat","rb");
+	if(ptr!=NULL)
+	{
+		fread(&reg,sizeof(reg),1,ptr);//lee un registro desde el archivo
+	    while(feof==false)//muestra a los amigos con la edad mayor
+	{
+		if(reg.estado=='A')
+		{ 
+			if(reg.edad>edadmay)
+			{
+					edadmay = reg.edad;
+					strcpy(nombreamigomayor,reg.nombre);
+					
+			}
+		}
+		fread(&reg,sizeof(reg),1,ptr);// lee un registro desde el archivo
+		}
+		cout<<"============================"<<endl;
+		cout<<"la edad mayor es"<< edadmay;
+		cout<<endl;
+		cout<<"============================"<<endl;
+		rewind(ptr); //coloca el puntero al inicio del archivo
+		fread(&reg,sizeof(reg),1,ptr);// lee un registro desde el archivo
+		   while(feof==false)//muestra los amigos con la edad mayor
+	{
+		if(reg.estado=='A')
+		{ 
+			if(reg.edad==edadmay)
+			{
+			cout<<"============================"<<endl;
+			cout<<"la edad mayor pertenece a:" <<reg.nombre <<endl;
+			cout<<"============================"<<endl;		
+			}
+		}
+		fread(&reg,sizeof(reg),1,ptr);// lee un registro desde el archivo
+		}
+		fclose(ptr);
+	}
+	else
+	{
+		cout<<"NO EXISTE EL ARCHIVO"<<endl;
+	}
+}
+
+void main()
+{   int opcion;
+	
+		cout<<"WELCOME TO THE JUNGLE LOGOOO!!!!!"<<endl;
+		cout<<"1.-Crear archivos"<<endl;
+		cout<<"2.-Añadir archivos"<<endl;
+		cout<<"3.-Mostrar archivos"<<endl;
+		cout<<"4.-Mostrar Edad mayor"<<endl;
+		cout<<"0.- Salir perriwis"<<endl;
+		cin>> opcion;
+
+		switch(opcion)
+		{	
+			case 1:
+				crear("amigos.dat"); break;
+
+			case 2:	
+				adicionardatos(); break;
+			case 3:
+				mostrararchivos(); break;
+			case 4:
+				edadmayor(); break;
+			case 0:
+				cout<<"Salimos Perriwis"<<endl; break;
+
+			default : cout<<"opcion invalida"<<endl;
+		}
+	getch();
+} 
