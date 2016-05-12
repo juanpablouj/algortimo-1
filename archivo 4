@@ -203,7 +203,7 @@ bool verifExisteProducto(int p)
 		fread(&prod,sizeof(prod),1,ptr);
 		while((feof(ptr)==false)&&(k==false))
 		{
-			if(prod.IdProd==p)
+			if(prod.idproducto==p)
 			{
 				k=true;
 			}
