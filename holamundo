@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {
 	cout<<"Hola Mundo \n"; 
-	cout<<"Soy Karem Infantas";
+	cout<<"Soy Juan Pablo Urioste Joffre";
 	getch();
 	return 0;
 }
